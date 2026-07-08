@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Claude VOICEVOX Reader",
+  "version": "0.1.0",
+  "description": "claude.ai の返答を VOICEVOX で自動読み上げする（自分用）",
+  "permissions": ["offscreen", "storage"],
+  "host_permissions": [
+    "http://localhost:50021/*",
+    "http://127.0.0.1:50021/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": ["selectors.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": { "default_popup": "popup.html" }
+}
