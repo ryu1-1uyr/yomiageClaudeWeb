@@ -2,7 +2,13 @@
 // バイナリ（wav）と再生状態はすべてこのコンテキストに閉じる（service worker には持たせない）。
 
 const VOICEVOX_BASE = "http://localhost:50021";
-const SPEAKER = 1;
+const COEIROINK_BASE = "http://localhost:50032";
+const DEFAULT_VOICE = { engine: "voicevox", styleId: 1 };
+
+// voice: { engine: "voicevox", styleId } | { engine: "coeiroink", speakerUuid, styleId }
+// 注意: offscreen document では chrome.storage 等の拡張 API は使えない（chrome.runtime のみ）。
+// 話者は background が READ への同梱と SET_VOICE メッセージで届けてくる。
+let voice = DEFAULT_VOICE;
 
 const queue = [];
 let playing = false;
@@ -13,8 +19,12 @@ let generation = 0; // STOP 世代カウンタ。古い再生ループを await 
 chrome.runtime.onMessage.addListener((msg) => {
   if (!msg || msg.target !== "offscreen") return;
   if (msg.type === "READ" && Array.isArray(msg.chunks)) {
+    if (msg.voice) voice = msg.voice;
     queue.push(...msg.chunks);
     if (!playing) playLoop();
+  } else if (msg.type === "SET_VOICE") {
+    voice = msg.voice;
+    prefetched = null; // 旧話者で先読み済みの wav は捨てて次チャンクから新話者にする
   } else if (msg.type === "STOP") {
     stop();
   }
@@ -31,20 +41,43 @@ function stop() {
 }
 
 async function synthesize(text) {
-  const params = new URLSearchParams({ text, speaker: String(SPEAKER) });
+  const v = voice; // 合成中に話者が切り替わっても1チャンク内では同じ声になるよう固定する
+  return v.engine === "coeiroink"
+    ? synthesizeCoeiroink(text, v)
+    : synthesizeVoicevox(text, v);
+}
+
+async function synthesizeVoicevox(text, v) {
+  const params = new URLSearchParams({ text, speaker: String(v.styleId) });
   const queryRes = await fetch(`${VOICEVOX_BASE}/audio_query?${params}`, {
     method: "POST",
   });
   if (!queryRes.ok) throw new Error(`audio_query failed: ${queryRes.status}`);
   const audioQuery = await queryRes.json();
 
-  const synthRes = await fetch(`${VOICEVOX_BASE}/synthesis?speaker=${SPEAKER}`, {
+  const synthRes = await fetch(`${VOICEVOX_BASE}/synthesis?speaker=${v.styleId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(audioQuery),
   });
   if (!synthRes.ok) throw new Error(`synthesis failed: ${synthRes.status}`);
   return synthRes.blob();
+}
+
+async function synthesizeCoeiroink(text, v) {
+  // COEIROINK v2 の独自 API。/v1/predict は1リクエストで wav が返る
+  const res = await fetch(`${COEIROINK_BASE}/v1/predict`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      speakerUuid: v.speakerUuid,
+      styleId: v.styleId,
+      text,
+      speedScale: 1.0,
+    }),
+  });
+  if (!res.ok) throw new Error(`coeiroink predict failed: ${res.status}`);
+  return res.blob();
 }
 
 function play(blob) {

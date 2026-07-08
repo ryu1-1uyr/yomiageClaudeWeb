@@ -6,7 +6,7 @@
       body {
         font-family: sans-serif;
         font-size: 14px;
-        min-width: 180px;
+        min-width: 220px;
         padding: 12px;
         display: flex;
         flex-direction: column;
@@ -22,10 +22,35 @@
         padding: 6px;
         cursor: pointer;
       }
+      fieldset {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px;
+      }
+      legend {
+        font-size: 12px;
+        color: #555;
+      }
+      .engine-note {
+        font-size: 12px;
+        color: #999;
+      }
     </style>
   </head>
   <body>
     <label><input type="checkbox" id="enabled" />読み上げ ON</label>
+    <fieldset>
+      <legend>話者（VOICEVOX）</legend>
+      <div id="voicevox-voices"></div>
+    </fieldset>
+    <fieldset>
+      <legend>話者（COEIROINK）</legend>
+      <div id="coeiroink-voices"><span class="engine-note">確認中...</span></div>
+    </fieldset>
+    <button id="read-last">最後の返答を読む</button>
     <button id="stop">停止</button>
     <script src="popup.js"></script>
   </body>

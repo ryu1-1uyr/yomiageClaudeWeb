@@ -3,10 +3,13 @@
   "name": "Claude VOICEVOX Reader",
   "version": "0.1.0",
   "description": "claude.ai の返答を VOICEVOX で自動読み上げする（自分用）",
-  "permissions": ["offscreen", "storage"],
+  "permissions": ["offscreen", "storage", "tabs", "scripting"],
   "host_permissions": [
+    "https://claude.ai/*",
     "http://localhost:50021/*",
-    "http://127.0.0.1:50021/*"
+    "http://127.0.0.1:50021/*",
+    "http://localhost:50032/*",
+    "http://127.0.0.1:50032/*"
   ],
   "background": { "service_worker": "background.js" },
   "content_scripts": [
