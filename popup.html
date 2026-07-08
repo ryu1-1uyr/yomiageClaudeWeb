@@ -22,6 +22,10 @@
         padding: 6px;
         cursor: pointer;
       }
+      select {
+        width: 100%;
+        padding: 4px;
+      }
       fieldset {
         border: 1px solid #ccc;
         border-radius: 4px;
@@ -43,12 +47,9 @@
   <body>
     <label><input type="checkbox" id="enabled" />読み上げ ON</label>
     <fieldset>
-      <legend>話者（VOICEVOX）</legend>
-      <div id="voicevox-voices"></div>
-    </fieldset>
-    <fieldset>
-      <legend>話者（COEIROINK）</legend>
-      <div id="coeiroink-voices"><span class="engine-note">確認中...</span></div>
+      <legend>話者</legend>
+      <select id="voice-select"></select>
+      <div id="engine-notes" class="engine-note"></div>
     </fieldset>
     <button id="read-last">最後の返答を読む</button>
     <button id="stop">停止</button>
