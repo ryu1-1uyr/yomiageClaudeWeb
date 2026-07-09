@@ -1,16 +1,23 @@
 // service worker: offscreen document の生成保証とメッセージ中継のみ。
 // MV3 の service worker はアイドル約30秒で終了するため、状態（キュー等）は一切持たない。
 
+// 対象サイト（claude.ai / ChatGPT / Gemini）の URL パターン。
+const SITE_URLS = [
+  "https://claude.ai/*",
+  "https://chatgpt.com/*",
+  "https://gemini.google.com/*",
+];
+
 // 拡張の再読み込みで既存タブの content script は孤児化する（chrome.runtime が死ぬ）ため、
-// 開いている claude.ai タブへ新しい content script を再注入して自動回復する。
+// 開いている対象タブへ新しい content script を再注入して自動回復する。
 // 孤児化した旧スクリプトは content.js 側の chrome.runtime.id チェックで自ら停止する。
 chrome.runtime.onInstalled.addListener(async () => {
-  const tabs = await chrome.tabs.query({ url: "https://claude.ai/*" });
+  const tabs = await chrome.tabs.query({ url: SITE_URLS });
   for (const tab of tabs) {
     try {
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        files: ["selectors.js", "content.js"],
+        files: ["adapters.js", "content.js"],
       });
     } catch (e) {
       console.warn("[VV] content script の再注入に失敗:", tab.id, e);
@@ -42,13 +49,13 @@ async function ensureOffscreen() {
 chrome.runtime.onMessage.addListener((msg) => {
   if (!msg || msg.target === "offscreen") return; // 自分が転送したメッセージは無視
 
-  // popup の「最後の返答を読む」: claude.ai タブの content script に抽出を依頼する
+  // popup の「最後の返答を読む」: 対象サイトのタブの content script に抽出を依頼する
   if (msg.type === "READ_LAST") {
     (async () => {
-      const tabs = await chrome.tabs.query({ url: "https://claude.ai/*" });
+      const tabs = await chrome.tabs.query({ url: SITE_URLS });
       const tab = tabs.find((t) => t.active) ?? tabs[0];
       if (!tab) {
-        console.warn("[VV] claude.ai のタブが見つからないため READ_LAST を無視");
+        console.warn("[VV] 対象サイトのタブが見つからないため READ_LAST を無視");
         return;
       }
       chrome.tabs.sendMessage(tab.id, { type: "READ_LAST" });

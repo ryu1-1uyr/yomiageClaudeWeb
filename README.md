@@ -1,12 +1,18 @@
 # Claude VOICEVOX Reader
 
-claude.ai（ブラウザ版）で Claude の返答が完了すると、ローカルの音声合成エンジン（VOICEVOX / COEIROINK）で自動読み上げする Chrome 拡張機能。
+主要な AI チャット（claude.ai / ChatGPT / Gemini）で応答が完了すると、ローカルの音声合成エンジン（VOICEVOX / COEIROINK）で自動読み上げする Chrome 拡張機能。
 
-> **注意**: Anthropic 非公式の個人用ツールです。claude.ai の DOM 構造に依存しているため、サイトのアップデートで動かなくなる可能性があります。
+対応サイト:
+
+- [claude.ai](https://claude.ai)
+- [ChatGPT](https://chatgpt.com)
+- [Gemini](https://gemini.google.com)
+
+> **注意**: 各サービス非公式の個人用ツールです。各サイトの DOM 構造に依存しているため、サイトのアップデートで動かなくなる可能性があります。
 
 ## 機能
 
-- Claude の返答完了を検知して自動で読み上げ（文単位で分割し、先読み合成で切れ目なく再生）
+- 応答完了を検知して自動で読み上げ（文単位で分割し、先読み合成で切れ目なく再生）
 - コードブロックは本体を読まず「〇〇のコードブロック」、テーブルは「表」とだけ読む
 - 絵文字・URL は除去して読み上げ
 - ポップアップから話者切り替え（VOICEVOX / COEIROINK の全キャラ・全スタイルを動的取得）
