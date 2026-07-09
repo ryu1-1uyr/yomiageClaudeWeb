@@ -16,6 +16,7 @@ let playing = false;
 let currentAudio = null;
 let prefetched = null; // { text, promise }
 let generation = 0; // STOP 世代カウンタ。古い再生ループを await 明けに止めるために使う
+let coeiroinkDictPushed = false; // COEIROINK は辞書がセッション限りなので、この document の生存中に1回だけ push する
 
 chrome.runtime.onMessage.addListener((msg) => {
   if (!msg || msg.target !== "offscreen") return;
@@ -70,7 +71,29 @@ async function synthesizeVoicevox(text, v) {
   return synthRes.blob();
 }
 
+// COEIROINK のユーザー辞書はエンジン再起動で消える（永続化されない）ため、
+// この offscreen document が生きている間に1回だけ words.json を push する。
+// 失敗しても合成自体は続行する（辞書が無いだけでスペルアウト読みに戻るだけのため）。
+async function ensureCoeiroinkDict() {
+  if (coeiroinkDictPushed) return;
+  coeiroinkDictPushed = true; // 先に立てて、合成が重なっても push が二重に走らないようにする
+  try {
+    const res = await fetch(chrome.runtime.getURL("words.json"));
+    const data = await res.json();
+    const dictionaryWords = buildDictionaryWords(data.words ?? []);
+    const pushRes = await fetch(`${COEIROINK_BASE}/v1/set_dictionary`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dictionaryWords }),
+    });
+    if (!pushRes.ok) throw new Error(`set_dictionary failed: ${pushRes.status}`);
+  } catch (e) {
+    console.warn("[VV] COEIROINK 辞書のプッシュに失敗（合成は続行）:", e);
+  }
+}
+
 async function synthesizeCoeiroink(text, v) {
+  await ensureCoeiroinkDict();
   // COEIROINK v2 の独自 API。/v1/predict は1リクエストで wav が返る
   const res = await fetch(`${COEIROINK_BASE}/v1/predict`, {
     method: "POST",
