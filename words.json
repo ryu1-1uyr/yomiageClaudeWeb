@@ -7,217 +7,1026 @@
     },
     {
       "surface": "JavaScript",
-      "kana": "ジャバスクリプト",
-      "accent": 0
+      "kana": "ジャバスクリプト"
     },
     {
       "surface": "Python",
-      "kana": "パイソン",
-      "accent": 0
+      "kana": "パイソン"
     },
     {
       "surface": "React",
-      "kana": "リアクト",
-      "accent": 0
+      "kana": "リアクト"
     },
     {
       "surface": "Node",
-      "kana": "ノード",
-      "accent": 0
+      "kana": "ノード"
     },
     {
       "surface": "npm",
-      "kana": "エヌピーエム",
-      "accent": 0
+      "kana": "エヌピーエム"
     },
     {
       "surface": "GitHub",
-      "kana": "ギットハブ",
-      "accent": 0
+      "kana": "ギットハブ"
     },
     {
       "surface": "Git",
-      "kana": "ギット",
-      "accent": 0
+      "kana": "ギット"
     },
     {
       "surface": "Docker",
-      "kana": "ドッカー",
-      "accent": 0
+      "kana": "ドッカー"
     },
     {
       "surface": "Chrome",
-      "kana": "クローム",
-      "accent": 0
+      "kana": "クローム"
     },
     {
       "surface": "API",
-      "kana": "エーピーアイ",
-      "accent": 0
+      "kana": "エーピーアイ"
     },
     {
       "surface": "JSON",
-      "kana": "ジェイソン",
-      "accent": 0
+      "kana": "ジェイソン"
     },
     {
       "surface": "HTML",
-      "kana": "エイチティーエムエル",
-      "accent": 0
+      "kana": "エイチティーエムエル"
     },
     {
       "surface": "CSS",
-      "kana": "シーエスエス",
-      "accent": 0
+      "kana": "シーエスエス"
     },
     {
       "surface": "SQL",
-      "kana": "エスキューエル",
-      "accent": 0
+      "kana": "エスキューエル"
     },
     {
       "surface": "Linux",
-      "kana": "リナックス",
-      "accent": 0
+      "kana": "リナックス"
     },
     {
       "surface": "macOS",
-      "kana": "マックオーエス",
-      "accent": 0
+      "kana": "マックオーエス"
     },
     {
       "surface": "Windows",
-      "kana": "ウィンドウズ",
-      "accent": 0
+      "kana": "ウィンドウズ"
     },
     {
       "surface": "VSCode",
-      "kana": "ブイエスコード",
-      "accent": 0
+      "kana": "ブイエスコード"
     },
     {
       "surface": "Claude",
-      "kana": "クロード",
-      "accent": 0
+      "kana": "クロード"
     },
     {
       "surface": "Gemini",
-      "kana": "ジェミニ",
-      "accent": 0
+      "kana": "ジェミニ"
     },
     {
       "surface": "ChatGPT",
-      "kana": "チャットジーピーティー",
-      "accent": 0
+      "kana": "チャットジーピーティー"
     },
     {
       "surface": "VOICEVOX",
-      "kana": "ボイスボックス",
-      "accent": 0
+      "kana": "ボイスボックス"
     },
     {
       "surface": "COEIROINK",
-      "kana": "コエイロインク",
-      "accent": 0
+      "kana": "コエイロインク"
     },
     {
       "surface": "Ubuntu",
-      "kana": "ウブントゥ",
-      "accent": 0
+      "kana": "ウブントゥ"
     },
     {
       "surface": "nginx",
-      "kana": "エンジンエックス",
-      "accent": 0
+      "kana": "エンジンエックス"
     },
     {
       "surface": "null",
-      "kana": "ヌル",
-      "accent": 0
+      "kana": "ヌル"
     },
     {
       "surface": "undefined",
-      "kana": "アンディファインド",
-      "accent": 0
+      "kana": "アンディファインド"
     },
     {
       "surface": "true",
-      "kana": "トゥルー",
-      "accent": 0
+      "kana": "トゥルー"
     },
     {
       "surface": "false",
-      "kana": "フォルス",
-      "accent": 0
+      "kana": "フォルス"
     },
     {
       "surface": "async",
-      "kana": "エイシンク",
-      "accent": 0
+      "kana": "エイシンク"
     },
     {
       "surface": "await",
-      "kana": "アウェイト",
-      "accent": 0
+      "kana": "アウェイト"
     },
     {
       "surface": "fetch",
-      "kana": "フェッチ",
-      "accent": 0
+      "kana": "フェッチ"
     },
     {
       "surface": "commit",
-      "kana": "コミット",
-      "accent": 0
+      "kana": "コミット"
     },
     {
       "surface": "push",
-      "kana": "プッシュ",
-      "accent": 0
+      "kana": "プッシュ"
     },
     {
       "surface": "pull",
-      "kana": "プル",
-      "accent": 0
+      "kana": "プル"
     },
     {
       "surface": "merge",
-      "kana": "マージ",
-      "accent": 0
+      "kana": "マージ"
     },
     {
       "surface": "rebase",
-      "kana": "リベース",
-      "accent": 0
+      "kana": "リベース"
     },
     {
       "surface": "deploy",
-      "kana": "デプロイ",
-      "accent": 0
+      "kana": "デプロイ"
     },
     {
       "surface": "debug",
-      "kana": "デバッグ",
-      "accent": 0
+      "kana": "デバッグ"
     },
     {
       "surface": "refactor",
-      "kana": "リファクタ",
-      "accent": 0
+      "kana": "リファクタ"
     },
     {
       "surface": "framework",
-      "kana": "フレームワーク",
-      "accent": 0
+      "kana": "フレームワーク"
     },
     {
       "surface": "manifest",
-      "kana": "マニュフェスト",
-      "accent": 0
+      "kana": "マニュフェスト"
     },
     {
       "surface": "popup",
-      "kana": "ポップアップ",
+      "kana": "ポップアップ"
+    },
+    {
+      "surface": "Java",
+      "kana": "ジャバ"
+    },
+    {
+      "surface": "Kotlin",
+      "kana": "コトリン"
+    },
+    {
+      "surface": "Swift",
+      "kana": "スウィフト"
+    },
+    {
+      "surface": "Ruby",
+      "kana": "ルビー"
+    },
+    {
+      "surface": "Rust",
+      "kana": "ラスト"
+    },
+    {
+      "surface": "Golang",
+      "kana": "ゴーラン"
+    },
+    {
+      "surface": "PHP",
+      "kana": "ピーエイチピー"
+    },
+    {
+      "surface": "Scala",
+      "kana": "スカラ"
+    },
+    {
+      "surface": "Perl",
+      "kana": "パール"
+    },
+    {
+      "surface": "Dart",
+      "kana": "ダート"
+    },
+    {
+      "surface": "Elixir",
+      "kana": "エリクサー"
+    },
+    {
+      "surface": "Haskell",
+      "kana": "ハスケル"
+    },
+    {
+      "surface": "Deno",
+      "kana": "ディーノ"
+    },
+    {
+      "surface": "Bun",
+      "kana": "バン"
+    },
+    {
+      "surface": "WebAssembly",
+      "kana": "ウェブアセンブリ"
+    },
+    {
+      "surface": "WASM",
+      "kana": "ワズム"
+    },
+    {
+      "surface": "Vue",
+      "kana": "ビュー"
+    },
+    {
+      "surface": "Angular",
+      "kana": "アンギュラー"
+    },
+    {
+      "surface": "Svelte",
+      "kana": "スベルト"
+    },
+    {
+      "surface": "Next",
+      "kana": "ネクスト"
+    },
+    {
+      "surface": "Nuxt",
+      "kana": "ナクスト"
+    },
+    {
+      "surface": "Remix",
+      "kana": "リミックス"
+    },
+    {
+      "surface": "Astro",
+      "kana": "アストロ"
+    },
+    {
+      "surface": "Preact",
+      "kana": "プリアクト"
+    },
+    {
+      "surface": "jQuery",
+      "kana": "ジェイクエリー"
+    },
+    {
+      "surface": "Vite",
+      "kana": "ヴィート"
+    },
+    {
+      "surface": "Webpack",
+      "kana": "ウェブパック"
+    },
+    {
+      "surface": "Rollup",
+      "kana": "ロールアップ"
+    },
+    {
+      "surface": "esbuild",
+      "kana": "イーエスビルド"
+    },
+    {
+      "surface": "Babel",
+      "kana": "バベル"
+    },
+    {
+      "surface": "Turbopack",
+      "kana": "ターボパック"
+    },
+    {
+      "surface": "Tailwind",
+      "kana": "テイルウィンド"
+    },
+    {
+      "surface": "Sass",
+      "kana": "サス"
+    },
+    {
+      "surface": "SCSS",
+      "kana": "エスシーエスエス"
+    },
+    {
+      "surface": "PostCSS",
+      "kana": "ポストシーエスエス"
+    },
+    {
+      "surface": "Bootstrap",
+      "kana": "ブートストラップ"
+    },
+    {
+      "surface": "Redux",
+      "kana": "リダックス"
+    },
+    {
+      "surface": "Zustand",
+      "kana": "ズスタンド"
+    },
+    {
+      "surface": "Jotai",
+      "kana": "ジョータイ"
+    },
+    {
+      "surface": "Recoil",
+      "kana": "リコイル"
+    },
+    {
+      "surface": "Pinia",
+      "kana": "ピニア"
+    },
+    {
+      "surface": "Vuex",
+      "kana": "ビューエックス"
+    },
+    {
+      "surface": "GraphQL",
+      "kana": "グラフキューエル"
+    },
+    {
+      "surface": "REST",
+      "kana": "レスト"
+    },
+    {
+      "surface": "gRPC",
+      "kana": "ジーアールピーシー"
+    },
+    {
+      "surface": "WebSocket",
+      "kana": "ウェブソケット"
+    },
+    {
+      "surface": "Axios",
+      "kana": "アクシオス"
+    },
+    {
+      "surface": "Apollo",
+      "kana": "アポロ"
+    },
+    {
+      "surface": "CORS",
+      "kana": "コルス"
+    },
+    {
+      "surface": "JWT",
+      "kana": "ジェイダブリューティー"
+    },
+    {
+      "surface": "OAuth",
+      "kana": "オーオース"
+    },
+    {
+      "surface": "endpoint",
+      "kana": "エンドポイント"
+    },
+    {
+      "surface": "payload",
+      "kana": "ペイロード"
+    },
+    {
+      "surface": "webhook",
+      "kana": "ウェブフック"
+    },
+    {
+      "surface": "middleware",
+      "kana": "ミドルウェア"
+    },
+    {
+      "surface": "HTTP",
+      "kana": "エイチティーティーピー"
+    },
+    {
+      "surface": "HTTPS",
+      "kana": "エイチティーティーピーエス"
+    },
+    {
+      "surface": "SSH",
+      "kana": "エスエスエイチ"
+    },
+    {
+      "surface": "SSL",
+      "kana": "エスエスエル"
+    },
+    {
+      "surface": "TCP",
+      "kana": "ティーシーピー"
+    },
+    {
+      "surface": "DNS",
+      "kana": "ディーエヌエス"
+    },
+    {
+      "surface": "CDN",
+      "kana": "シーディーエヌ"
+    },
+    {
+      "surface": "Express",
+      "kana": "エクスプレス"
+    },
+    {
+      "surface": "Fastify",
+      "kana": "ファスティファイ"
+    },
+    {
+      "surface": "NestJS",
+      "kana": "ネストジェイエス"
+    },
+    {
+      "surface": "Django",
+      "kana": "ジャンゴ"
+    },
+    {
+      "surface": "Flask",
+      "kana": "フラスク"
+    },
+    {
+      "surface": "FastAPI",
+      "kana": "ファストエーピーアイ"
+    },
+    {
+      "surface": "Rails",
+      "kana": "レイルズ"
+    },
+    {
+      "surface": "Laravel",
+      "kana": "ララベル"
+    },
+    {
+      "surface": "Spring",
+      "kana": "スプリング"
+    },
+    {
+      "surface": "PostgreSQL",
+      "kana": "ポストグレスキューエル"
+    },
+    {
+      "surface": "MySQL",
+      "kana": "マイエスキューエル"
+    },
+    {
+      "surface": "MongoDB",
+      "kana": "モンゴディービー"
+    },
+    {
+      "surface": "Redis",
+      "kana": "レディス"
+    },
+    {
+      "surface": "SQLite",
+      "kana": "エスキューライト"
+    },
+    {
+      "surface": "Prisma",
+      "kana": "プリズマ"
+    },
+    {
+      "surface": "Mongoose",
+      "kana": "マングース"
+    },
+    {
+      "surface": "Supabase",
+      "kana": "スーパベース"
+    },
+    {
+      "surface": "Firebase",
+      "kana": "ファイアベース"
+    },
+    {
+      "surface": "DynamoDB",
+      "kana": "ダイナモディービー"
+    },
+    {
+      "surface": "Elasticsearch",
+      "kana": "エラスティックサーチ"
+    },
+    {
+      "surface": "AWS",
+      "kana": "エーダブリューエス"
+    },
+    {
+      "surface": "GCP",
+      "kana": "ジーシーピー"
+    },
+    {
+      "surface": "Azure",
+      "kana": "アジュール"
+    },
+    {
+      "surface": "Kubernetes",
+      "kana": "クバネティス"
+    },
+    {
+      "surface": "Terraform",
+      "kana": "テラフォーム"
+    },
+    {
+      "surface": "Ansible",
+      "kana": "アンシブル"
+    },
+    {
+      "surface": "Vercel",
+      "kana": "ヴァーセル"
+    },
+    {
+      "surface": "Netlify",
+      "kana": "ネットリファイ"
+    },
+    {
+      "surface": "Cloudflare",
+      "kana": "クラウドフレア"
+    },
+    {
+      "surface": "Apache",
+      "kana": "アパッチ"
+    },
+    {
+      "surface": "Lambda",
+      "kana": "ラムダ"
+    },
+    {
+      "surface": "Jest",
+      "kana": "ジェスト"
+    },
+    {
+      "surface": "Vitest",
+      "kana": "ヴィテスト"
+    },
+    {
+      "surface": "Mocha",
+      "kana": "モカ"
+    },
+    {
+      "surface": "Cypress",
+      "kana": "サイプレス"
+    },
+    {
+      "surface": "Playwright",
+      "kana": "プレイライト"
+    },
+    {
+      "surface": "Selenium",
+      "kana": "セレニウム"
+    },
+    {
+      "surface": "Storybook",
+      "kana": "ストーリーブック"
+    },
+    {
+      "surface": "Puppeteer",
+      "kana": "パペティア"
+    },
+    {
+      "surface": "ESLint",
+      "kana": "イーエスリント"
+    },
+    {
+      "surface": "Prettier",
+      "kana": "プリティア"
+    },
+    {
+      "surface": "yarn",
+      "kana": "ヤーン"
+    },
+    {
+      "surface": "pnpm",
+      "kana": "ピーエヌピーエム"
+    },
+    {
+      "surface": "Turborepo",
+      "kana": "ターボレポ"
+    },
+    {
+      "surface": "Husky",
+      "kana": "ハスキー"
+    },
+    {
+      "surface": "callback",
+      "kana": "コールバック"
+    },
+    {
+      "surface": "promise",
+      "kana": "プロミス"
+    },
+    {
+      "surface": "closure",
+      "kana": "クロージャ"
+    },
+    {
+      "surface": "component",
+      "kana": "コンポーネント"
+    },
+    {
+      "surface": "props",
+      "kana": "プロップス"
+    },
+    {
+      "surface": "state",
+      "kana": "ステート"
+    },
+    {
+      "surface": "render",
+      "kana": "レンダー"
+    },
+    {
+      "surface": "hydration",
+      "kana": "ハイドレーション"
+    },
+    {
+      "surface": "SSR",
+      "kana": "エスエスアール"
+    },
+    {
+      "surface": "SSG",
+      "kana": "エスエスジー"
+    },
+    {
+      "surface": "CSR",
+      "kana": "シーエスアール"
+    },
+    {
+      "surface": "DOM",
+      "kana": "ドム"
+    },
+    {
+      "surface": "hook",
+      "kana": "フック"
+    },
+    {
+      "surface": "reducer",
+      "kana": "リデューサー"
+    },
+    {
+      "surface": "dispatch",
+      "kana": "ディスパッチ"
+    },
+    {
+      "surface": "selector",
+      "kana": "セレクタ"
+    },
+    {
+      "surface": "context",
+      "kana": "コンテキスト"
+    },
+    {
+      "surface": "provider",
+      "kana": "プロバイダー"
+    },
+    {
+      "surface": "suspense",
+      "kana": "サスペンス"
+    },
+    {
+      "surface": "fragment",
+      "kana": "フラグメント"
+    },
+    {
+      "surface": "repository",
+      "kana": "リポジトリ"
+    },
+    {
+      "surface": "pipeline",
+      "kana": "パイプライン"
+    },
+    {
+      "surface": "runtime",
+      "kana": "ランタイム"
+    },
+    {
+      "surface": "compiler",
+      "kana": "コンパイラ"
+    },
+    {
+      "surface": "transpile",
+      "kana": "トランスパイル"
+    },
+    {
+      "surface": "polyfill",
+      "kana": "ポリフィル"
+    },
+    {
+      "surface": "boilerplate",
+      "kana": "ボイラープレート"
+    },
+    {
+      "surface": "monorepo",
+      "kana": "モノレポ"
+    },
+    {
+      "surface": "dependency",
+      "kana": "ディペンデンシー"
+    },
+    {
+      "surface": "schema",
+      "kana": "スキーマ"
+    },
+    {
+      "surface": "migration",
+      "kana": "マイグレーション"
+    },
+    {
+      "surface": "query",
+      "kana": "クエリ"
+    },
+    {
+      "surface": "mutation",
+      "kana": "ミューテーション"
+    },
+    {
+      "surface": "resolver",
+      "kana": "リゾルバ"
+    },
+    {
+      "surface": "decorator",
+      "kana": "デコレータ"
+    },
+    {
+      "surface": "generic",
+      "kana": "ジェネリック"
+    },
+    {
+      "surface": "interface",
+      "kana": "インターフェース"
+    },
+    {
+      "surface": "enum",
+      "kana": "イーナム"
+    },
+    {
+      "surface": "namespace",
+      "kana": "ネームスペース"
+    },
+    {
+      "surface": "tuple",
+      "kana": "タプル"
+    },
+    {
+      "surface": "boolean",
+      "kana": "ブーリアン"
+    },
+    {
+      "surface": "array",
+      "kana": "アレイ"
+    },
+    {
+      "surface": "object",
+      "kana": "オブジェクト"
+    },
+    {
+      "surface": "throttle",
+      "kana": "スロットル"
+    },
+    {
+      "surface": "debounce",
+      "kana": "デバウンス"
+    },
+    {
+      "surface": "memoize",
+      "kana": "メモアイズ"
+    },
+    {
+      "surface": "recursion",
+      "kana": "リカージョン"
+    },
+    {
+      "surface": "algorithm",
+      "kana": "アルゴリズム"
+    },
+    {
+      "surface": "latency",
+      "kana": "レイテンシー"
+    },
+    {
+      "surface": "concurrency",
+      "kana": "コンカレンシー"
+    },
+    {
+      "surface": "cache",
+      "kana": "キャッシュ"
+    },
+    {
+      "surface": "cookie",
+      "kana": "クッキー"
+    },
+    {
+      "surface": "session",
+      "kana": "セッション"
+    },
+    {
+      "surface": "token",
+      "kana": "トークン"
+    },
+    {
+      "surface": "regex",
+      "kana": "レジェックス"
+    },
+    {
+      "surface": "UUID",
+      "kana": "ユーユーアイディー"
+    },
+    {
+      "surface": "slug",
+      "kana": "スラッグ"
+    },
+    {
+      "surface": "YAML",
+      "kana": "ヤムル"
+    },
+    {
+      "surface": "TOML",
+      "kana": "トムル"
+    },
+    {
+      "surface": "XML",
+      "kana": "エックスエムエル"
+    },
+    {
+      "surface": "Markdown",
+      "kana": "マークダウン"
+    },
+    {
+      "surface": "CSV",
+      "kana": "シーエスブイ"
+    },
+    {
+      "surface": "SVG",
+      "kana": "エスブイジー"
+    },
+    {
+      "surface": "ASCII",
+      "kana": "アスキー"
+    },
+    {
+      "surface": "lint",
+      "kana": "リント"
+    },
+    {
+      "surface": "minify",
+      "kana": "ミニファイ"
+    },
+    {
+      "surface": "bundle",
+      "kana": "バンドル"
+    },
+    {
+      "surface": "scaffold",
+      "kana": "スキャフォールド"
+    },
+    {
+      "surface": "semver",
+      "kana": "セムバー"
+    },
+    {
+      "surface": "changelog",
+      "kana": "チェンジログ"
+    },
+    {
+      "surface": "README",
+      "kana": "リードミー"
+    },
+    {
+      "surface": "config",
+      "kana": "コンフィグ"
+    },
+    {
+      "surface": "CI",
+      "kana": "シーアイ"
+    },
+    {
+      "surface": "CD",
+      "kana": "シーディー"
+    },
+    {
+      "surface": "DevOps",
+      "kana": "デブオプス"
+    },
+    {
+      "surface": "agile",
+      "kana": "アジャイル"
+    },
+    {
+      "surface": "scrum",
+      "kana": "スクラム"
+    },
+    {
+      "surface": "sprint",
+      "kana": "スプリント"
+    },
+    {
+      "surface": "backlog",
+      "kana": "バックログ"
+    },
+    {
+      "surface": "kanban",
+      "kana": "カンバン"
+    },
+    {
+      "surface": "clone",
+      "kana": "クローン"
+    },
+    {
+      "surface": "branch",
+      "kana": "ブランチ"
+    },
+    {
+      "surface": "checkout",
+      "kana": "チェックアウト"
+    },
+    {
+      "surface": "stash",
+      "kana": "スタッシュ"
+    },
+    {
+      "surface": "origin",
+      "kana": "オリジン"
+    },
+    {
+      "surface": "upstream",
+      "kana": "アップストリーム"
+    },
+    {
+      "surface": "diff",
+      "kana": "ディフ"
+    },
+    {
+      "surface": "revert",
+      "kana": "リバート"
+    },
+    {
+      "surface": "reset",
+      "kana": "リセット"
+    },
+    {
+      "surface": "remote",
+      "kana": "リモート"
+    },
+    {
+      "surface": "fork",
+      "kana": "フォーク"
+    },
+    {
+      "surface": "squash",
+      "kana": "スカッシュ"
+    },
+    {
+      "surface": "POST",
+      "kana": "ポスト"
+    },
+    {
+      "surface": "PUT",
+      "kana": "プット"
+    },
+    {
+      "surface": "DELETE",
+      "kana": "デリート"
+    },
+    {
+      "surface": "PATCH",
+      "kana": "パッチ"
+    },
+    {
+      "surface": "Safari",
+      "kana": "サファリ",
+      "accent": 0
+    },
+    {
+      "surface": "Interop",
+      "kana": "インタアロップ",
+      "accent": 0
+    },
+    {
+      "surface": "Anchor",
+      "kana": "アンカー",
+      "accent": 0
+    },
+    {
+      "surface": "Positioning",
+      "kana": "ポジショニング",
+      "accent": 0
+    },
+    {
+      "surface": "AGENTS",
+      "kana": "エージェンツ",
+      "accent": 0
+    },
+    {
+      "surface": "AGENT",
+      "kana": "エージェント",
+      "accent": 0
+    },
+    {
+      "surface": "strict",
+      "kana": "ストリクト",
+      "accent": 0
+    },
+    {
+      "surface": "Preview",
+      "kana": "プレビュウ",
       "accent": 0
     }
   ]
