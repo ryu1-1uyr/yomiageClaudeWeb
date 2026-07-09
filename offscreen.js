@@ -9,6 +9,7 @@ const DEFAULT_VOICE = { engine: "voicevox", styleId: 1 };
 // 注意: offscreen document では chrome.storage 等の拡張 API は使えない（chrome.runtime のみ）。
 // 話者は background が READ への同梱と SET_VOICE メッセージで届けてくる。
 let voice = DEFAULT_VOICE;
+let volume = 1.0;
 
 const queue = [];
 let playing = false;
@@ -20,8 +21,12 @@ chrome.runtime.onMessage.addListener((msg) => {
   if (!msg || msg.target !== "offscreen") return;
   if (msg.type === "READ" && Array.isArray(msg.chunks)) {
     if (msg.voice) voice = msg.voice;
+    if (msg.volume != null) volume = msg.volume;
     queue.push(...msg.chunks);
     if (!playing) playLoop();
+  } else if (msg.type === "SET_VOLUME") {
+    volume = msg.volume;
+    if (currentAudio) currentAudio.volume = volume;
   } else if (msg.type === "SET_VOICE") {
     voice = msg.voice;
     prefetched = null; // 旧話者で先読み済みの wav は捨てて次チャンクから新話者にする
@@ -35,9 +40,10 @@ function stop() {
   queue.length = 0;
   prefetched = null;
   if (currentAudio) {
-    currentAudio.pause(); // pause イベントで play() の Promise が解決してループが抜ける
+    currentAudio.pause();
     currentAudio = null;
   }
+  speechSynthesis.cancel();
 }
 
 async function synthesize(text) {
@@ -80,10 +86,26 @@ async function synthesizeCoeiroink(text, v) {
   return res.blob();
 }
 
+function speakBrowser(text) {
+  return new Promise((resolve) => {
+    const utt = new SpeechSynthesisUtterance(text);
+    const v = voice;
+    if (v.voiceName) {
+      const found = speechSynthesis.getVoices().find((x) => x.name === v.voiceName);
+      if (found) utt.voice = found;
+    }
+    utt.volume = volume;
+    utt.addEventListener("end", resolve, { once: true });
+    utt.addEventListener("error", resolve, { once: true });
+    speechSynthesis.speak(utt);
+  });
+}
+
 function play(blob) {
   return new Promise((resolve) => {
     const url = URL.createObjectURL(blob);
     const audio = new Audio(url);
+    audio.volume = volume;
     currentAudio = audio;
     const finish = () => {
       URL.revokeObjectURL(url);
@@ -102,6 +124,16 @@ async function playLoop() {
   const myGen = generation;
   while (queue.length > 0 && myGen === generation) {
     const text = queue.shift();
+
+    if (voice.engine === "browser") {
+      try {
+        await speakBrowser(text);
+      } catch (e) {
+        console.error("[VV] ブラウザ読み上げに失敗:", text, e);
+      }
+      continue;
+    }
+
     let blob;
     try {
       if (prefetched && prefetched.text === text) {
@@ -117,11 +149,10 @@ async function playLoop() {
     }
     if (myGen !== generation) break;
 
-    // 次チャンクの合成を先行実行（常に1件だけ）。再生の切れ目の無音を防ぐ
     if (queue.length > 0 && !prefetched) {
       const nextText = queue[0];
       const promise = synthesize(nextText);
-      promise.catch(() => {}); // unhandled rejection 防止。失敗は本番取得時に再検出される
+      promise.catch(() => {});
       prefetched = { text: nextText, promise };
     }
 

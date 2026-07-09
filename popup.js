@@ -1,3 +1,15 @@
+function getBrowserVoices() {
+  return new Promise((resolve) => {
+    const voices = speechSynthesis.getVoices();
+    if (voices.length > 0) return resolve(voices);
+    speechSynthesis.addEventListener(
+      "voiceschanged",
+      () => resolve(speechSynthesis.getVoices()),
+      { once: true }
+    );
+  });
+}
+
 const ENGINES = [
   {
     name: "VOICEVOX",
@@ -7,7 +19,7 @@ const ENGINES = [
       const speakers = await res.json();
       return speakers.flatMap((sp) =>
         sp.styles
-          .filter((st) => !st.type || st.type === "talk") // 歌唱用等のスタイルは除外
+          .filter((st) => !st.type || st.type === "talk")
           .map((st) => ({
             label: `${sp.name}（${st.name}）`,
             voice: { engine: "voicevox", styleId: st.id },
@@ -33,6 +45,16 @@ const ENGINES = [
       );
     },
   },
+  {
+    name: "ブラウザ標準",
+    async fetchVoices() {
+      const voices = await getBrowserVoices();
+      return voices.map((v) => ({
+        label: `${v.name} (${v.lang})`,
+        voice: { engine: "browser", voiceName: v.name },
+      }));
+    },
+  },
 ];
 
 const checkbox = document.getElementById("enabled");
@@ -40,23 +62,29 @@ const stopButton = document.getElementById("stop");
 const readLastButton = document.getElementById("read-last");
 const select = document.getElementById("voice-select");
 const notesEl = document.getElementById("engine-notes");
+const volumeSlider = document.getElementById("volume");
+const volumeValue = document.getElementById("volume-value");
 
 // select の value（voiceKey）→ voice オブジェクトの引き当て用
 const voiceMap = new Map();
 
 function voiceKey(v) {
+  if (v.engine === "browser") return `browser:${v.voiceName}`;
   return v.engine === "coeiroink"
     ? `coeiroink:${v.speakerUuid}:${v.styleId}`
     : `voicevox:${v.styleId}`;
 }
 
 async function init() {
-  const { enabled, speaker, voice } = await chrome.storage.local.get({
+  const { enabled, speaker, voice, volume } = await chrome.storage.local.get({
     enabled: true,
-    speaker: 1, // 旧形式からの引き継ぎ用
+    speaker: 1,
     voice: null,
+    volume: 100,
   });
   checkbox.checked = enabled;
+  volumeSlider.value = volume;
+  volumeValue.textContent = `${volume}%`;
   const current = voice ?? { engine: "voicevox", styleId: speaker };
   const currentKey = voiceKey(current);
 
@@ -96,6 +124,12 @@ async function init() {
 select.addEventListener("change", () => {
   const v = voiceMap.get(select.value);
   if (v) chrome.storage.local.set({ voice: v });
+});
+
+volumeSlider.addEventListener("input", () => {
+  const v = Number(volumeSlider.value);
+  volumeValue.textContent = `${v}%`;
+  chrome.storage.local.set({ volume: v });
 });
 
 checkbox.addEventListener("change", () => {

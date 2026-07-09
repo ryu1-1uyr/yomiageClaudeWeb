@@ -24,6 +24,7 @@ claude.ai（ブラウザ版）で Claude の返答が完了すると、ローカ
 
    ```
    git clone https://github.com/ryu1-1uyr/yomiageClaudeWeb.git
+   git clone git@github.com:ryu1-1uyr/yomiageClaudeWeb.git
    ```
 
 2. Chrome で `chrome://extensions` を開く

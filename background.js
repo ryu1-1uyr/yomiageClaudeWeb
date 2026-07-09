@@ -60,9 +60,12 @@ chrome.runtime.onMessage.addListener((msg) => {
   (async () => {
     try {
       await ensureOffscreen();
-      // offscreen では chrome.storage が使えないため、READ に現在の話者を同梱して渡す
-      const voice = msg.type === "READ" ? await currentVoice() : undefined;
-      chrome.runtime.sendMessage({ ...msg, voice, target: "offscreen" });
+      // offscreen では chrome.storage が使えないため、READ に現在の話者・音量を同梱して渡す
+      let voice, volume;
+      if (msg.type === "READ") {
+        [voice, volume] = await Promise.all([currentVoice(), currentVolume()]);
+      }
+      chrome.runtime.sendMessage({ ...msg, voice, volume, target: "offscreen" });
     } catch (e) {
       console.error("[VV] offscreen への転送に失敗", e);
     }
@@ -71,24 +74,39 @@ chrome.runtime.onMessage.addListener((msg) => {
 
 async function currentVoice() {
   const { speaker, voice } = await chrome.storage.local.get({
-    speaker: 1, // 旧形式（speaker: number）からの引き継ぎ用
+    speaker: 1,
     voice: null,
   });
   return voice ?? { engine: "voicevox", styleId: speaker };
 }
 
+async function currentVolume() {
+  const { volume } = await chrome.storage.local.get({ volume: 100 });
+  return volume / 100;
+}
+
 // 再生中の話者切り替えを offscreen に即時反映する（offscreen 未生成なら次の READ で渡るので何もしない）
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== "local" || !changes.voice) return;
+  if (area !== "local") return;
+  if (!changes.voice && !changes.volume) return;
   (async () => {
     const contexts = await chrome.runtime.getContexts({
       contextTypes: ["OFFSCREEN_DOCUMENT"],
     });
     if (contexts.length === 0) return;
-    chrome.runtime.sendMessage({
-      target: "offscreen",
-      type: "SET_VOICE",
-      voice: changes.voice.newValue,
-    });
+    if (changes.voice) {
+      chrome.runtime.sendMessage({
+        target: "offscreen",
+        type: "SET_VOICE",
+        voice: changes.voice.newValue,
+      });
+    }
+    if (changes.volume) {
+      chrome.runtime.sendMessage({
+        target: "offscreen",
+        type: "SET_VOLUME",
+        volume: changes.volume.newValue / 100,
+      });
+    }
   })();
 });

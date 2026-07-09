@@ -51,6 +51,11 @@
       <select id="voice-select"></select>
       <div id="engine-notes" class="engine-note"></div>
     </fieldset>
+    <fieldset>
+      <legend>音量</legend>
+      <input type="range" id="volume" min="0" max="100" step="1" />
+      <span id="volume-value"></span>
+    </fieldset>
     <button id="read-last">最後の返答を読む</button>
     <button id="stop">停止</button>
     <script src="popup.js"></script>
