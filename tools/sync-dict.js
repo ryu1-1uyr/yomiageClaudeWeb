@@ -113,7 +113,6 @@ async function pushCoeiroink(words) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ dictionaryWords }),
     });
-    await console.log("レスポンス", res);
   } catch (e) {
     console.log(`COEIROINK: エンジン未起動のためスキップ（${e.message}）`);
     return null;
@@ -146,7 +145,11 @@ async function main() {
   console.log(`コピー: 完了（${HOOK_WORDS_FILE}）`);
 }
 
-main().catch((e) => {
-  console.error("同期に失敗しました:", e);
-  process.exit(1);
-});
+module.exports = { syncVoicevox, pushCoeiroink, copyToHook };
+
+if (require.main === module) {
+  main().catch((e) => {
+    console.error("同期に失敗しました:", e);
+    process.exit(1);
+  });
+}

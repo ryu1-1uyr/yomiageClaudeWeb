@@ -42,6 +42,24 @@
         font-size: 12px;
         color: #999;
       }
+      #dict-section {
+        display: none;
+      }
+      #dict-section.visible {
+        display: flex;
+      }
+      #dict-section input {
+        width: 100%;
+        padding: 4px;
+        font-size: 12px;
+        box-sizing: border-box;
+      }
+      #dict-status {
+        font-size: 11px;
+        min-height: 1em;
+      }
+      #dict-status.ok { color: #2a7d2a; }
+      #dict-status.error { color: #c0392b; }
     </style>
   </head>
   <body>
@@ -58,6 +76,13 @@
     </fieldset>
     <button id="read-last">最後の返答を読む</button>
     <button id="stop">停止</button>
+    <fieldset id="dict-section">
+      <legend>辞書登録</legend>
+      <input type="text" id="dict-surface" placeholder="表層形 (例: Rust)" />
+      <input type="text" id="dict-kana" placeholder="読み (ひらがな可)" />
+      <button id="dict-register" style="width:100%">登録</button>
+      <div id="dict-status"></div>
+    </fieldset>
     <script src="popup.js"></script>
   </body>
 </html>

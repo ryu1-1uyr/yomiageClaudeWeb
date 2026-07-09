@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>読み上げ辞書エディタ</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        font-size: 14px;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      h1 {
+        font-size: 16px;
+        margin: 0 0 4px;
+      }
+      .table-container {
+        overflow-x: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+      col.surface { width: 30%; }
+      col.kana { width: 35%; }
+      col.accent { width: 15%; }
+      col.actions { width: 20%; }
+      th,
+      td {
+        border-bottom: 1px solid #ddd;
+        padding: 4px 8px;
+        text-align: left;
+      }
+      th {
+        background: #f5f5f5;
+        font-size: 12px;
+        color: #555;
+      }
+      td input {
+        border: none;
+        background: transparent;
+        font: inherit;
+        width: 100%;
+        padding: 4px 2px;
+        box-sizing: border-box;
+      }
+      td input:focus {
+        outline: 1px solid #888;
+        border-radius: 2px;
+      }
+      td input.invalid {
+        outline: 1px solid #c0392b;
+        border-radius: 2px;
+      }
+      td.accent-cell input {
+        width: 4em;
+      }
+      td.actions-cell {
+        white-space: nowrap;
+        text-align: center;
+      }
+      button {
+        padding: 6px 10px;
+        cursor: pointer;
+      }
+      .icon-button {
+        padding: 2px 6px;
+        font-size: 14px;
+      }
+      fieldset {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+      }
+      legend {
+        font-size: 12px;
+        color: #555;
+      }
+      fieldset label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      fieldset input[type="text"] {
+        padding: 4px;
+      }
+      fieldset input[type="number"] {
+        padding: 4px;
+        width: 5em;
+      }
+      #save-button.dirty {
+        background: #ffe9a8;
+      }
+      #status {
+        font-size: 12px;
+        min-height: 1.2em;
+      }
+      #status.ok {
+        color: #2a7d2a;
+      }
+      #status.error {
+        color: #c0392b;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>読み上げ辞書エディタ</h1>
+
+    <div class="table-container">
+      <table>
+        <colgroup>
+          <col class="surface">
+          <col class="kana">
+          <col class="accent">
+          <col class="actions">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>表層形</th>
+            <th>読み（カタカナ）</th>
+            <th>アクセント</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="word-list"></tbody>
+      </table>
+    </div>
+
+    <fieldset>
+      <legend>単語を追加</legend>
+      <label>表層形: <input type="text" id="new-surface" /></label>
+      <label>読み: <input type="text" id="new-kana" /></label>
+      <label>アクセント: <input type="number" id="new-accent" min="0" step="1" value="0" /></label>
+      <button id="add-button">追加</button>
+    </fieldset>
+
+    <button id="save-button">保存 & 同期</button>
+
+    <div id="status"></div>
+
+    <script>
+      let words = [];
+      let dirty = false;
+
+      const wordListEl = document.getElementById("word-list");
+      const saveButton = document.getElementById("save-button");
+      const statusEl = document.getElementById("status");
+      const newSurfaceInput = document.getElementById("new-surface");
+      const newKanaInput = document.getElementById("new-kana");
+      const newAccentInput = document.getElementById("new-accent");
+      const addButton = document.getElementById("add-button");
+
+      // ひらがなも許可する（サーバー側で保存時にカタカナへ正規化される）
+      const KANA_RE = /^[ぁ-ゖァ-ヴー]+$/;
+
+      function setStatus(message, ok) {
+        statusEl.textContent = message;
+        statusEl.className = ok ? "ok" : "error";
+      }
+
+      function setDirty(value) {
+        dirty = value;
+        saveButton.textContent = dirty ? "保存 & 同期 *" : "保存 & 同期";
+        saveButton.classList.toggle("dirty", dirty);
+      }
+
+      async function loadWords() {
+        const res = await fetch("/api/words");
+        const data = await res.json();
+        words = data.words;
+        setDirty(false);
+        renderTable();
+      }
+
+      function renderTable() {
+        wordListEl.innerHTML = "";
+        words.forEach((word, i) => {
+          const tr = document.createElement("tr");
+
+          const surfaceTd = document.createElement("td");
+          const surfaceInput = document.createElement("input");
+          surfaceInput.type = "text";
+          surfaceInput.value = word.surface;
+          surfaceInput.oninput = () => {
+            words[i].surface = surfaceInput.value;
+            setDirty(true);
+            updateValidity(surfaceInput, kanaInput);
+          };
+          surfaceTd.append(surfaceInput);
+
+          const kanaTd = document.createElement("td");
+          const kanaInput = document.createElement("input");
+          kanaInput.type = "text";
+          kanaInput.value = word.kana;
+          kanaInput.oninput = () => {
+            words[i].kana = kanaInput.value;
+            setDirty(true);
+            updateValidity(surfaceInput, kanaInput);
+          };
+          kanaTd.append(kanaInput);
+
+          updateValidity(surfaceInput, kanaInput);
+
+          const accentTd = document.createElement("td");
+          accentTd.className = "accent-cell";
+          const accentInput = document.createElement("input");
+          accentInput.type = "number";
+          accentInput.min = "0";
+          accentInput.step = "1";
+          accentInput.value = word.accent ?? 0;
+          accentInput.oninput = () => {
+            words[i].accent = Number(accentInput.value) || 0;
+            setDirty(true);
+          };
+          accentTd.append(accentInput);
+
+          const actionsTd = document.createElement("td");
+          actionsTd.className = "actions-cell";
+          const testButton = document.createElement("button");
+          testButton.className = "icon-button";
+          testButton.textContent = "🔊";
+          testButton.onclick = () => testWord(words[i].surface);
+          const deleteButton = document.createElement("button");
+          deleteButton.className = "icon-button";
+          deleteButton.textContent = "✕";
+          deleteButton.onclick = () => {
+            words.splice(i, 1);
+            setDirty(true);
+            renderTable();
+          };
+          actionsTd.append(testButton, deleteButton);
+
+          tr.append(surfaceTd, kanaTd, accentTd, actionsTd);
+          wordListEl.append(tr);
+        });
+      }
+
+      function updateValidity(surfaceInput, kanaInput) {
+        surfaceInput.classList.toggle("invalid", surfaceInput.value.length === 0);
+        kanaInput.classList.toggle(
+          "invalid",
+          kanaInput.value.length === 0 || !KANA_RE.test(kanaInput.value)
+        );
+      }
+
+      function validateWords() {
+        for (let i = 0; i < words.length; i++) {
+          const word = words[i];
+          if (!word.surface) return `${i + 1}行目: 表層形が空です`;
+          if (!word.kana) return `${i + 1}行目: 読みが空です`;
+          if (!KANA_RE.test(word.kana)) return `${i + 1}行目: 読みがカタカナではありません`;
+        }
+        return null;
+      }
+
+      async function saveAndSync() {
+        const invalidReason = validateWords();
+        if (invalidReason) {
+          setStatus(invalidReason, false);
+          return;
+        }
+
+        saveButton.disabled = true;
+        setStatus("保存中...", true);
+        try {
+          const res = await fetch("/api/words", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ words }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            setStatus(data.details ? `保存に失敗しました: ${data.details}` : "保存に失敗しました", false);
+            return;
+          }
+
+          const s = data.sync;
+          const parts = [];
+          parts.push(
+            s.voicevox
+              ? `VOICEVOX: +${s.voicevox.added} / 更新${s.voicevox.updated} / 変更なし${s.voicevox.unchanged}`
+              : "VOICEVOX: 未起動"
+          );
+          parts.push(s.coeiroink != null ? `COEIROINK: ${s.coeiroink}語` : "COEIROINK: 未起動");
+          setStatus(`保存しました（${parts.join(", ")}）`, true);
+
+          await loadWords();
+        } catch {
+          setStatus("保存に失敗しました", false);
+        } finally {
+          saveButton.disabled = false;
+        }
+      }
+
+      async function testWord(surface) {
+        setStatus("再生中...", true);
+        try {
+          const res = await fetch("/api/test", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: surface }),
+          });
+          if (!res.ok) throw new Error(`test failed: ${res.status}`);
+          const buffer = await res.arrayBuffer();
+          const blob = new Blob([buffer], { type: "audio/wav" });
+          const url = URL.createObjectURL(blob);
+          const audio = new Audio(url);
+          audio.onended = () => {
+            URL.revokeObjectURL(url);
+            setStatus("再生しました", true);
+          };
+          await audio.play();
+        } catch {
+          setStatus("再生に失敗しました（VOICEVOXが起動していない可能性があります）", false);
+        }
+      }
+
+      addButton.addEventListener("click", () => {
+        const surface = newSurfaceInput.value.trim();
+        const kana = newKanaInput.value.trim();
+        const accent = Number(newAccentInput.value) || 0;
+
+        if (!surface || !kana || !KANA_RE.test(kana)) {
+          setStatus("表層形と読み（カタカナ）を正しく入力してください", false);
+          return;
+        }
+
+        words.push({ surface, kana, accent });
+        setDirty(true);
+        renderTable();
+
+        newSurfaceInput.value = "";
+        newKanaInput.value = "";
+        newAccentInput.value = "0";
+        setStatus("", true);
+      });
+
+      saveButton.addEventListener("click", saveAndSync);
+
+      loadWords();
+    </script>
+  </body>
+</html>

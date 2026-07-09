@@ -11,7 +11,8 @@
     "http://localhost:50021/*",
     "http://127.0.0.1:50021/*",
     "http://localhost:50032/*",
-    "http://127.0.0.1:50032/*"
+    "http://127.0.0.1:50032/*",
+    "http://127.0.0.1:50090/*"
   ],
   "background": { "service_worker": "background.js" },
   "content_scripts": [

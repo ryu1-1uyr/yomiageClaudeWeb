@@ -144,4 +144,49 @@ stopButton.addEventListener("click", () => {
   chrome.runtime.sendMessage({ type: "STOP" });
 });
 
+const dictSection = document.getElementById("dict-section");
+const dictSurface = document.getElementById("dict-surface");
+const dictKana = document.getElementById("dict-kana");
+const dictRegister = document.getElementById("dict-register");
+const dictStatus = document.getElementById("dict-status");
+
+fetch("http://127.0.0.1:50090/api/words")
+  .then((r) => {
+    if (r.ok) dictSection.classList.add("visible");
+  })
+  .catch(() => {});
+
+dictRegister.addEventListener("click", async () => {
+  const surface = dictSurface.value.trim();
+  const kana = dictKana.value.trim();
+  if (!surface || !kana) {
+    dictStatus.textContent = "表層形と読みを入力してください";
+    dictStatus.className = "error";
+    return;
+  }
+  dictRegister.disabled = true;
+  try {
+    const res = await fetch("http://127.0.0.1:50090/api/words", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ surface, kana }),
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || "登録に失敗しました");
+    }
+    const data = await res.json();
+    dictStatus.textContent = data.updated ? "更新しました" : "登録しました";
+    dictStatus.className = "ok";
+    dictSurface.value = "";
+    dictKana.value = "";
+  } catch (e) {
+    dictStatus.textContent =
+      e.message === "Failed to fetch" ? "辞書サーバー未起動" : e.message;
+    dictStatus.className = "error";
+  } finally {
+    dictRegister.disabled = false;
+  }
+});
+
 init();
